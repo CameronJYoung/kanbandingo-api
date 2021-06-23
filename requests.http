@@ -1,0 +1,77 @@
+// Create Board
+POST http://localhost:8080/kanban/board
+content-type: application/json
+
+{
+    "name": "TEST-BOARD-3"
+}
+
+###
+
+// Create Column
+POST http://localhost:8080/kanban/column/3/
+content-type: application/json
+
+{
+    "name": "TEST-sdfdhsfghfgh-54586787634543"
+}
+
+###
+
+// Create Ticket
+POST http://localhost:8080/kanban/ticket/8
+content-type: application/json
+
+{
+    "description": "345324"
+}
+
+###
+
+// Create Comment
+POST http://localhost:8080/kanban/comment/8
+content-type: application/json
+
+{
+    "content": "dgfhsryjr45esdsdgfedthg"
+}
+
+###
+
+// Get all boards
+GET http://localhost:8080/kanban/board
+
+###
+
+// Get board by id
+GET http://localhost:8080/kanban/board/2
+
+###
+
+// Get columns from board id
+GET http://localhost:8080/kanban/board/4/columns
+
+###
+
+// Get column by id
+GET http://localhost:8080/kanban/column/3
+
+###
+
+// Get tickets by column id
+GET http://localhost:8080/kanban/column/2/tickets
+
+###
+
+// Get ticket by id
+GET http://localhost:8080/kanban/ticket/1
+
+###
+
+// Get comments by ticket id
+GET http://localhost:8080/kanban/ticket/1/comments
+
+###
+
+// Get comments by id
+GET http://localhost:8080/kanban/comment/3
