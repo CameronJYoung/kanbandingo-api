@@ -1,7 +1,6 @@
+require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
-
-const port = 8080;
 
 // Initialize App
 
@@ -32,6 +31,6 @@ require('./src/routes/kanban.routes')(app);
 
 // Listen on port
 
-app.listen(port, () => {
-	console.log(`App running on port ${port}.`);
+app.listen(process.env.PORT, () => {
+	console.log(`App running on port ${process.env.PORT}.`);
 });
