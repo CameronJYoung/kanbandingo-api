@@ -4,12 +4,11 @@ module.exports = {
 	PASSWORD: process.env.DB_PASSWORD,
 	DB: process.env.DB_DB,
 	dialect: process.env.DB_dialect,
-    dialectOptions: {
-        ssl: {
-            require: true,
-            rejectUnauthorized: false
-        }
-    },
+	native: true, 
+	ssl: true, 
+	dialectOptions: {
+	  ssl: true
+	},
 	pool: {
 		max: 5,
 		min: 0,
