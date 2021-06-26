@@ -14,21 +14,42 @@ const dbConfig = require('../config/db.config');
 // 			idle: dbConfig.pool.idle,
 // 		},
 // 	},
+// 	dialectOptions: {
+// 		ssl: {
+// 		  require: true,
+// 		  rejectUnauthorized: false // <<<<<<< YOU NEED THIS
+// 		}
+// 	},
 // );
 
-const sequelize = new Sequelize(process.env.DATABASE_URL+'?ssl=true', {
-	dialect: "postgres",
-	protocol: "postgres",
+const sequelize = new Sequelize({
+	database: dbConfig.DB,
+	username: dbConfig.USER,
+	password: dbConfig.PASSWORD,
+	host: dbConfig.HOST,
 	port: process.env.PORT,
-	host: process.env.DB_HOST,
-	logging: true, //false
+	dialect: dbConfig.dialect,
 	dialectOptions: {
 		ssl: {
 		  require: true,
 		  rejectUnauthorized: false // <<<<<<< YOU NEED THIS
 		}
-	  }
+	},
 });
+
+// const sequelize = new Sequelize(process.env.DATABASE_URL+'?ssl=true', {
+// 	dialect: "postgres",
+// 	protocol: "postgres",
+// 	port: process.env.PORT,
+// 	host: process.env.DB_HOST,
+// 	logging: true, //false
+// 	dialectOptions: {
+// 		ssl: {
+// 		  require: true,
+// 		  rejectUnauthorized: false // <<<<<<< YOU NEED THIS
+// 		}
+// 	  }
+// });
 
 const db = {};
 
