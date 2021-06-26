@@ -1,3 +1,6 @@
+console.log(1);
+console.log(process.env.DB_PASSWORD);
+console.log(2);
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config()
 }
