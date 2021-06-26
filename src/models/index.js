@@ -16,7 +16,7 @@ const dbConfig = require('../config/db.config');
 // 	},
 // );
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+const sequelize = new Sequelize(process.env.DATABASE_URL+'?ssl=true', {
 	dialect: "postgres",
 	protocol: "postgres",
 	port: process.env.PORT,
