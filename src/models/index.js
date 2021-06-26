@@ -21,7 +21,13 @@ const sequelize = new Sequelize(process.env.DATABASE_URL+'?ssl=true', {
 	protocol: "postgres",
 	port: process.env.PORT,
 	host: process.env.DB_HOST,
-	logging: true //false
+	logging: true, //false
+	dialectOptions: {
+		ssl: {
+		  require: true,
+		  rejectUnauthorized: false // <<<<<<< YOU NEED THIS
+		}
+	  }
 });
 
 const db = {};
