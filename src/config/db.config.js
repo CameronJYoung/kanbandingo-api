@@ -1,18 +1,43 @@
-module.exports = {
-	HOST: process.env.DB_HOST,
-	USER: process.env.DB_USER,
-	PASSWORD: process.env.DB_PASSWORD,
-	DB: process.env.DB_DB,
-	dialect: process.env.DB_dialect,
-	native: true, 
-	ssl: true, 
-	dialectOptions: {
-	  ssl: true
-	},
-	pool: {
-		max: 5,
-		min: 0,
-		acquire: 3000,
-		idle: 10000,
-	},
-};
+const getConfig = () => {
+	if (process.env.NODE_ENV !== 'production') {
+		return () => {
+			process.env.DB_DB,
+			process.env.DB_USER,
+			process.env.DB_PASSWORD, {
+				host: process.env.DB_HOST,
+				dialect: process.env.DB_dialect,
+				pool: {
+					max: dbConfig.pool.max,
+					min: dbConfig.pool.min,
+					acquire: dbConfig.pool.acquire,
+					idle: dbConfig.pool.idle,
+				},
+			}
+		}
+	} else {
+		return () => {
+			process.env.DB_DB,
+			process.env.DB_USER,
+			process.env.DB_PASSWORD, {
+				host: process.env.DB_HOST,
+				dialect: process.env.DB_dialect,
+				dialectOptions: {
+					ssl: {
+					require: true,
+					rejectUnauthorized: false // <<<<<<< YOU NEED THIS
+					}
+				},
+				pool: {
+					max: dbConfig.pool.max,
+					min: dbConfig.pool.min,
+					acquire: dbConfig.pool.acquire,
+					idle: dbConfig.pool.idle,
+				},
+			}
+		}
+	}
+}
+
+module.exports = getConfig();
+
+
