@@ -16,7 +16,13 @@ const dbConfig = require('../config/db.config');
 // 	},
 // );
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {dialect:'postgres', native:true, ssl:true, dialectOptions: {ssl: true}});
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+	dialect: "postgres",
+	protocol: "postgres",
+	port: process.env.PORT,
+	host: process.env.DB_HOST,
+	logging: true //false
+});
 
 const db = {};
 
