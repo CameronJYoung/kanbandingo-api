@@ -124,3 +124,9 @@ exports.getUsersBoardById = (req, res) => {
 		res.send(result[0])
 	})
 }
+
+exports.getUsersBoards = (req, res) => {
+	User.findAll().then(result => {
+		res.send(result)
+	})
+}
