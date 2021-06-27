@@ -33,6 +33,7 @@ app.get('/', (request, response) => {
 
 require('./src/routes/auth.routes')(app);
 require('./src/routes/kanban.routes')(app);
+require('./src/routes/user.routes')(app);
 
 // Listen on port
 
