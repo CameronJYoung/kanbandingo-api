@@ -3,7 +3,7 @@ const authMiddleware = require('../middleware/auth.middleware.js');
 const user = require('../controllers/user.controller.js');
 
 module.exports = (app) => {
-	router.get('/board', user.getUsers); // GET ALL BOARDS
+	router.get('/', user.getUsers); // GET ALL BOARDS
 
 	router.post('/board', authMiddleware.verifyToken, user.createBoard);
 	router.post('/column/:boardID/', authMiddleware.verifyToken, user.createColumn);
