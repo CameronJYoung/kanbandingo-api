@@ -1,12 +1,10 @@
-console.log(1);
-console.log(process.env.DB_PASSWORD);
-console.log(2);
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config()
 }
 
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 // Initialize App
 
@@ -19,6 +17,7 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 // Initialize DB
 
@@ -32,7 +31,7 @@ app.get('/', (request, response) => {
 	response.send({ data: 'Kanbandingo API!!!' });
 });
 
-//require('./app/routes/auth.routes')(app);
+require('./src/routes/auth.routes')(app);
 require('./src/routes/kanban.routes')(app);
 
 // Listen on port

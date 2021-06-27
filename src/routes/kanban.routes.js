@@ -1,11 +1,12 @@
 const router = require('express').Router();
+const authMiddleware = require('../middleware/auth.middleware.js');
 const kanban = require('../controllers/kanban.controller.js');
 
 module.exports = (app) => {
-	router.post('/board', kanban.createBoard);
-	router.post('/column/:boardID/', kanban.createColumn);
-	router.post('/ticket/:columnID', kanban.createTicket);
-	router.post('/comment/:ticketID', kanban.createComment);
+	router.post('/board', authMiddleware.verifyToken, kanban.createBoard);
+	router.post('/column/:boardID/', authMiddleware.verifyToken, kanban.createColumn);
+	router.post('/ticket/:columnID', authMiddleware.verifyToken, kanban.createTicket);
+	router.post('/comment/:ticketID', authMiddleware.verifyToken, kanban.createComment);
 
 	router.get('/board', kanban.getAllBoards); // GET ALL BOARDS
 	router.get('/board/:boardID', kanban.getBoardById); // GET BOARD BY ID

@@ -1,60 +1,51 @@
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const cookie = require('cookie-parser');
+const salt = bcrypt.genSaltSync(10);
 
+const modelExists = require('../helpers/modelExists');
+const getModel = require('../helpers/getModel');
+const generateJwt = require('../helpers/generateJwt');
 const db = require('../models');
 
 const User = db.user;
 
-exports.logIn = (req, res) => {
-	User.findOne({
-		where: {
-			name: req.body.name,
-		},
-	}).then((users) => {
-		if (!users) {
-			return res.status(404).send({ message: 'User not found!' });
-		}
-
-		const passwordIsValid = bcrypt.compareSync(
-			req.body.password,
-			users.password,
-		);
-
-		if (!passwordIsValid) {
-			return res.status(401).send({
-				accessToken: null,
-				message: 'Invalid Password!',
-			});
-		}
-
-		res.status(200).send({ message: 'User not found!' });
-	}).catch((err) => {
-		res.status(500).send({ message: err.message });
-	});
-};
-
-exports.signUp = (req, res) => {
-	if (!req.body.name && !req.body.email && !req.body.password) {
-		res.status(400).send({
-			message: 'Content cannot be empty!',
-		});
-		return;
-	}
+exports.register = (req, res) => {
 
 	const user = {
-		name: req.body.name,
+		username: req.body.username,
 		email: req.body.email,
-		password: bcrypt.hashSync(req.body.password, 8),
-	};
+		password: bcrypt.hashSync(req.body.password, salt)
+	}
 
 	User.create(user)
-		.then(() => {
-			res.send('User Registered!');
+		.then((data) => {
+			res.send(data);
 		})
 		.catch((err) => {
 			res.status(500).send({
 				message: err.message || 'Error occured while creating user!',
 			});
 		});
+};
+
+exports.login = async (req, res) => {
+	const { username, password } = req.body;
+	const userExists = await modelExists(User, 'username', username);
+	
+	if (userExists) {
+		try {
+			const user = await getModel(User, 'username', username);
+			if(bcrypt.compareSync(password, user.password)){
+				console.log(1);
+				generateJwt(res, user.id, username);
+			} else {
+				return res.status(500).send('incorrect password!');
+			}
+			
+		} catch (err) {
+			return res.status(500).json(err.toString());
+		}
+	} else {
+		return res.status(500).json('USER DOES NOT EXIST');
+	}
+	
 };
