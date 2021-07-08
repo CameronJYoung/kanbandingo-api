@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const salt = bcrypt.genSaltSync(10);
 
 const modelExists = require('../helpers/modelExists');
@@ -35,8 +36,8 @@ exports.login = async (req, res) => {
 		try {
 			const user = await getModel(User, 'username', username);
 			if(bcrypt.compareSync(password, user.password)){
-				console.log(1);
 				generateJwt(res, user.id, username);
+				console.log(res);
 			} else {
 				return res.status(500).send('incorrect password!');
 			}
@@ -48,4 +49,20 @@ exports.login = async (req, res) => {
 		return res.status(500).json('USER DOES NOT EXIST');
 	}
 	
+};
+
+exports.checkAuth = async (req, res) => {
+	const token = await req.cookies.token || '';
+
+	try {
+		if (!token) {
+			return res.status(401).json('You need to Login')
+		}
+		const decrypt = await jwt.verify(token, process.env.JWT_SECRET);
+		return res.status(200).json({
+			authentication: true
+		})
+	} catch (err) {
+		return res.status(500).json(err.toString());
+	}
 };

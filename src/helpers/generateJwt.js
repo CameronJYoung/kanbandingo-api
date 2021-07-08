@@ -1,5 +1,10 @@
 const jwt = require('jsonwebtoken');
 
+Date.prototype.addHours= function(h){
+	this.setHours(this.getHours()+h);
+	return this;
+}
+
 const generateJwt = (res, id, username) => {
 	const expiration = process.env.NODE_ENV === 'development' ? 100 : 604800000;
 	const token = jwt.sign({ id, username }, process.env.JWT_SECRET, {
@@ -7,7 +12,7 @@ const generateJwt = (res, id, username) => {
 	});
 	if (process.env.NODE_ENV === 'development') {
 		return res.cookie('token', token, {
-			expires: new Date(Date.now() + expiration),
+			expires: new Date(new Date().addHours(1) + expiration),
 			secure: false, 
 			httpOnly: true,
 		}).sendStatus(200)
