@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'development') {
 				min: 0,
 				acquire: 3000,
 				idle: 10000
-			},
+			}, 
 		},
 	)
 } else if (process.env.NODE_ENV === 'production') {
