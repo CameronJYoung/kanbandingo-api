@@ -11,7 +11,7 @@ const generateJwt = (res, id, username) => {
 	const token = jwt.sign({ id, username }, process.env.JWT_SECRET, {
 	  expiresIn: process.env.NODE_ENV === 'development' ? '1d' : '7d',
 	});
-	console.log(new Date(new Date().addHours(1) + expiration));
+	console.log(new Date(new Date().addHours(10) + expiration));
 	console.log(new Date);
 	if (process.env.NODE_ENV === 'development') {
 		return res.cookie('token', token, {
