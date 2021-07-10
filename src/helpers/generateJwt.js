@@ -18,7 +18,7 @@ const generateJwt = (res, id, username) => {
 			httpOnly: true,
 		}).sendStatus(200)
 	} else {
-		console.log(3);
+		console.log(Date.now());
 		return res.cookie('token', token, {
 			expires: expiration,
 			secure: true, 
