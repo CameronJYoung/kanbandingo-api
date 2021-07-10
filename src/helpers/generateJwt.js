@@ -13,13 +13,13 @@ const generateJwt = (res, id, username) => {
 	});
 	if (process.env.NODE_ENV === 'development') {
 		return res.cookie('token', token, {
-			expires: new Date(new Date().addHours(10) + expiration),
+			expires: new Date(new Date().addHours(1) + expiration),
 			secure: false, 
 			httpOnly: true,
 		}).sendStatus(200)
 	} else {
 		return res.cookie('token', token, {
-			expires: new Date(Date.now() + expiration),
+			expires: new Date(Date.now().addHours(1) + expiration),
 			secure: true, 
 			httpOnly: true,
 		}).sendStatus(200)
