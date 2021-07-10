@@ -34,6 +34,7 @@ exports.login = async (req, res) => {
 	
 	if (userExists) {
 		try {
+			console.log(1);
 			const user = await getModel(User, 'username', username);
 			if(bcrypt.compareSync(password, user.password)){
 				generateJwt(res, user.id, username);
