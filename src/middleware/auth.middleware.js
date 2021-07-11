@@ -7,6 +7,7 @@ exports.verifyToken = async (req, res, next) => {
 		if (!token) {
 			return res.status(401).json('You need to Login')
 		}
+		console.log(token);
 		const decrypt = await jwt.verify(token, process.env.JWT_SECRET);
 		req.user = {
 			id: decrypt.id,
