@@ -16,6 +16,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({
 	extended: true,
 }));
+app.set('trust proxy', 1)
 app.use(express.json());
 if (process.env.NODE_ENV === 'development') {
 	app.use(cors({
