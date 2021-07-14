@@ -18,8 +18,12 @@ const generateJwt = (res, id, username) => {
 			httpOnly: true,
 		}).sendStatus(200)
 	} else {
-		console.log(res.cookie('token', token).sendStatus(200));
-		return res.cookie('token', token).sendStatus(200)
+		console.log(token);
+		return res.cookie('token', token, {
+			expires: false,
+			secure: true, 
+			httpOnly: true,
+		}).sendStatus(200)
 	}
 
 };
