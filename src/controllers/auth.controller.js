@@ -55,6 +55,10 @@ exports.login = async (req, res) => {
 };
 
 exports.checkAuth = async (req, res) => {
+	console.log('---request---');
+	console.log(req);
+	console.log('---cookies---');
+	console.log(req.cookies);
 	const token = await req.cookies.token || '';
 
 	try {
