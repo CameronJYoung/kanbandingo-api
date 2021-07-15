@@ -18,11 +18,14 @@ const generateJwt = (res, id, username) => {
 			httpOnly: true,
 		}).sendStatus(200)
 	} else {
+		console.log(1);
 		console.log(token);
 		return res.cookie('token', token, {
-			expires: false,
+			maxAge: new Date() * 0.001 + 300,
+			domain: 'https://kanbandingo-frontend.herokuapp.com/',
 			secure: true, 
 			httpOnly: true,
+			sameSite:'none',
 		}).sendStatus(200)
 	}
 
