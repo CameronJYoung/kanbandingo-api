@@ -21,11 +21,10 @@ const generateJwt = (res, id, username) => {
 		console.log(1);
 		console.log(token);
 		return res.cookie('token', token, {
-			expires: false,
+			maxAge: 1000,
 			domain: 'https://kanbandingo-frontend.herokuapp.com/',
 			secure: true, 
-			httpOnly: true,
-			sameSite:'none',
+			httpOnly: true
 		}).sendStatus(200)
 	}
 
