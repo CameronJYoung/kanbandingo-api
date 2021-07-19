@@ -58,6 +58,7 @@ exports.checkAuth = async (req, res) => {
 	const token = await req.cookies.token || '';
 
 	try {
+		console.log(req.headers.cookie);
 		if (!token) {
 			return res.status(401).json('You need to Login')
 		}
