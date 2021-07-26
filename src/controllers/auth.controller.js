@@ -55,14 +55,14 @@ exports.login = async (req, res) => {
 };
 
 exports.checkAuth = async (req, res) => {
-	const token = await req.cookies.token || '';
+	const token = await req.headers.authorization || '';
 
 	try {
-		console.log(req.headers.cookie);
+		console.log(req.headers);
 		if (!token) {
 			return res.status(401).json('You need to Login')
 		}
-		const decrypt = await jwt.verify(token, process.env.JWT_SECRET);
+		//const decrypt = await jwt.verify(token, process.env.JWT_SECRET);
 		return res.status(200).json({
 			authentication: true
 		})

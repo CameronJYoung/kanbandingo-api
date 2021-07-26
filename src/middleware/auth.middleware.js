@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 exports.verifyToken = async (req, res, next) => {
-	const token = await req.cookies.token || '';
+	const token = await req.headers.authorization || '';
+	console.log(token);
 	try {
 		if (!token) {
 			return res.status(401).json('You need to Login')
