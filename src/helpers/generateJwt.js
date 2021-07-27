@@ -7,7 +7,7 @@ Date.prototype.addHours= function(h){
 
 const generateJwt = (res, id, username) => {
 	const token = jwt.sign({ id, username }, process.env.JWT_SECRET, {
-	  expiresIn: process.env.NODE_ENV === 'development' ? '1d' : '7d',
+	  expiresIn: process.env.NODE_ENV === 'development' ? '2d' : '1h',
 	});
 	res.json({
 		token: token
