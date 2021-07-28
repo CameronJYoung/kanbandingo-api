@@ -4,17 +4,18 @@ exports.verifyToken = async (req, res, next) => {
 	const token = await req.headers.authorization || '';
 	console.log(token);
 	try {
-		if (!token) {
-			return res.status(401).json('You need to Login')
+		const decrypt = await jwt.verify(token, process.env.JWT_SECRET);
+
+		if (!decrypt) {
+			return res.status(401).json({authentication: false})
 		}
 		
-		const decrypt = await jwt.verify(token, process.env.JWT_SECRET);
 		req.user = {
 			id: decrypt.id,
 			username: decrypt.username
 		}
 		next();
 	} catch (err) {
-		return res.status(500).json(err.toString());
+		return res.status(500).json({authentication: false});
 	}
 }
