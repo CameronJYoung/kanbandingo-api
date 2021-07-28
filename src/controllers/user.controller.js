@@ -1,5 +1,7 @@
 const db = require('../models');
 
+const getModel = require('../helpers/getModel');
+
 const User = db.user;
 const Board = db.board;
 const Column = db.column;
@@ -128,5 +130,17 @@ exports.getUsersBoardById = (req, res) => {
 exports.getUsers = (req, res) => {
 	User.findAll().then(result => {
 		res.send(result)
+	})
+}
+
+exports.moveTicket = (req, res) => {
+	console.log(req.params.ticketID);
+	console.log(req.params.columnID);
+	Ticket.findByPk(req.params.ticketID).then(result => {
+		result.columnId = req.params.columnID
+		result.save()
+		res.send('done')
+	}).catch(err => {
+		res.json(err)
 	})
 }

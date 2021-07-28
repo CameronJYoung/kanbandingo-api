@@ -9,6 +9,8 @@ module.exports = (app) => {
 	router.post('/column/:boardID/', authMiddleware.verifyToken, user.createColumn);
 	router.post('/ticket/:columnID', authMiddleware.verifyToken, user.createTicket);
 	router.post('/comment/:ticketID', authMiddleware.verifyToken, user.createComment);
+
+	router.put('/ticket/:ticketID/:columnID/move', user.moveTicket);
 	
 	router.get('/board', authMiddleware.verifyToken, user.getUsersBoards); // GET ALL BOARDS
 	router.get('/board/:boardID', authMiddleware.verifyToken, user.getUsersBoardById); // GET BOARD BY ID
